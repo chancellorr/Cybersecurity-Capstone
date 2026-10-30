@@ -1,0 +1,5 @@
+# Copy to admin_justifications.yaml (which is not committed) and list approved admin principals.
+# Used by rule KC-06. An admin principal not listed here is reported as unjustified.
+approved_admins:
+  - principal: admin/admin@LAB.LOCAL
+    justification: Realm administrator for the lab

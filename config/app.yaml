@@ -1,0 +1,9 @@
+# Application settings. Never put API keys here; use the OPENAI_API_KEY environment variable.
+ai:
+  provider: mock          # mock | openai
+  model: TBD              # chosen in Sprint 2 (Design Document, Open Question 1)
+  temperature: 0.2
+paths:
+  database: audit_output/kerbo_s.db
+  snapshots: snapshots
+  reports: audit_output/reports

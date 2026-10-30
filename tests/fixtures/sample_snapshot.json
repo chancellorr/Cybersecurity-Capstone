@@ -1,0 +1,8 @@
+{
+  "collected_at": "2026-10-29T00:00:00",
+  "principals": [
+    {"name": "alice@LAB.LOCAL", "kind": "user", "last_password_change": "2026-06-01T00:00:00"},
+    {"name": "bob@LAB.LOCAL", "kind": "user", "last_password_change": "2026-09-15T00:00:00"},
+    {"name": "host/server.lab.local@LAB.LOCAL", "kind": "service", "last_password_change": "2025-01-01T00:00:00"}
+  ]
+}

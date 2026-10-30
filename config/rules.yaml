@@ -1,0 +1,38 @@
+# Rule thresholds and baseline risk factors (Requirements Document v2.0, Sections 6.1 and 6.2).
+# Risk score = impact*0.40 + exploitability*0.30 + exposure*0.20 + compliance*0.10
+# Any change to a baseline must be recorded in the Change Document.
+rules:
+  KC-01:
+    thresholds: {max_age_days: 90}
+    factors: {impact: 40, exploitability: 35, exposure: 30, compliance: 60}
+  KC-02:
+    thresholds: {max_age_days: 180}
+    factors: {impact: 80, exploitability: 60, exposure: 60, compliance: 80}
+  KC-03:
+    thresholds: {min_length: 12}
+    factors: {impact: 70, exploitability: 50, exposure: 70, compliance: 80}
+  KC-04:
+    thresholds: {inactive_days: 180}
+    factors: {impact: 35, exploitability: 30, exposure: 35, compliance: 50}
+  KC-05:
+    thresholds: {inactive_days: 180}
+    factors: {impact: 35, exploitability: 30, exposure: 35, compliance: 50}
+  KC-06:
+    thresholds: {}
+    factors: {impact: 80, exploitability: 55, exposure: 60, compliance: 75}
+  KC-07:
+    thresholds: {}
+    factors: {impact: 95, exploitability: 85, exposure: 80, compliance: 90}
+  KC-08:
+    thresholds: {max_hours: 24}
+    factors: {impact: 45, exploitability: 35, exposure: 45, compliance: 45}
+  KC-09:
+    thresholds: {max_days: 7}
+    factors: {impact: 40, exploitability: 35, exposure: 45, compliance: 45}
+  KC-10:
+    thresholds: {failures: 10, window_minutes: 15}
+    factors: {impact: 70, exploitability: 75, exposure: 75, compliance: 55}
+  KC-11:
+    # TODO: calibrate after observing normal lab traffic (Open Decision 4)
+    thresholds: {max_requests: 100, window_minutes: 15}
+    factors: {impact: 65, exploitability: 60, exposure: 65, compliance: 40}
