@@ -22,10 +22,35 @@ class Principal:
         return (now - self.last_password_change).days
 
 
+@dataclass(frozen=True)
+class Policy:
+    name: str
+    min_length: Optional[int] = None
+    max_life_days: Optional[int] = None
+    min_life_days: Optional[int] = None
+    history: Optional[int] = None
+    max_failures: Optional[int] = None
+
+
+@dataclass(frozen=True)
+class ConfigSetting:
+    file: str
+    section: str
+    key: str
+    value: str
+
+    @property
+    def object_id(self) -> str:
+        return f"{self.file}/{self.section}/{self.key}"
+
+
 @dataclass
 class Snapshot:
     collected_at: datetime
     principals: list = field(default_factory=list)
+    policies: list = field(default_factory=list)
+    config: list = field(default_factory=list)
+    errors: list = field(default_factory=list)
 
 
 @dataclass(frozen=True)
