@@ -10,7 +10,7 @@
 
    ## Kerberos
    - Realm: KERBO.LAB
-   - KDC and admin server: kdc.kerbo.lab (127.0.1.1 in /etc/hosts)
+   - KDC and admin server: kdc.kerbo.lab (10.27.27.32 in /etc/hosts)
    - Packages: krb5-kdc, krb5-admin-server, krb5-user
    - Principals: alice (user), ben/admin (admin), plus built-ins
    - Policy: standard (minlength 12, maxlife 90 days)
