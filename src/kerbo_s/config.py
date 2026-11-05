@@ -31,5 +31,17 @@ class Config:
     def threshold(self, rule_id: str, key: str):
         return self.data["rules"][rule_id]["thresholds"][key]
 
+    def approved_admins(self) -> set:
+        """Principals listed in the KC-06 justification file. A missing file means none are approved."""
+        path = self.data["rules"]["KC-06"]["thresholds"].get("justification_file")
+        if not path:
+            return set()
+        try:
+            with open(path, "r", encoding="utf-8") as handle:
+                data = yaml.safe_load(handle) or {}
+        except FileNotFoundError:
+            return set()
+        return {entry["principal"] for entry in data.get("approved_admins", []) if entry.get("justification")}
+
     def factors(self, rule_id: str) -> dict:
         return self.data["rules"][rule_id]["factors"]

@@ -18,7 +18,7 @@ rules:
     thresholds: {inactive_days: 180}
     factors: {impact: 35, exploitability: 30, exposure: 35, compliance: 50}
   KC-06:
-    thresholds: {}
+    thresholds: {justification_file: config/admin_justifications.yaml}
     factors: {impact: 80, exploitability: 55, exposure: 60, compliance: 75}
   KC-07:
     thresholds: {}
