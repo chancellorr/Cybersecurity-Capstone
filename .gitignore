@@ -1,6 +1,4 @@
-# Append these lines to the repo's existing .gitignore (do not replace the file).
-# IMPORTANT: if the existing .gitignore has a rule like *.txt, add the next line
-# so requirements.txt is not ignored:
+# Allow requirements.txt even if a broader *.txt rule is added later
 !requirements.txt
 
 # Python
@@ -12,6 +10,7 @@ __pycache__/
 # Secrets and local data (never commit these)
 .env
 *.db
+*.keytab
 audit_output/
 
 # Real lab snapshots can contain sensitive data; sample fixtures are allowed
