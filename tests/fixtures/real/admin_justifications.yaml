@@ -1,0 +1,4 @@
+   # Approved admin principals for the Kerbo-S lab realm. Used by rule KC-06 in tests.
+   approved_admins:
+     - principal: ben/admin@KERBO.LAB
+       justification: Kerbo-S lab administrator
