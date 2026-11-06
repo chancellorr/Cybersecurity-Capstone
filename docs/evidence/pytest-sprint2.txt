@@ -1,0 +1,39 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.12.2, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\jaynn\Desktop\Cybersecurity-Capstone\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\jaynn\Desktop\Cybersecurity-Capstone
+configfile: pytest.ini
+testpaths: tests
+plugins: anyio-4.15.1
+collecting ... collected 28 items
+
+tests/test_engine.py::test_sample_snapshot_gives_one_scored_finding PASSED [  3%]
+tests/test_engine.py::test_audit_is_deterministic PASSED                 [  7%]
+tests/test_parsers/test_kadmin.py::test_TC_COL_01_classification PASSED  [ 10%]
+tests/test_parsers/test_kadmin.py::test_TC_COL_01_principal_parsing PASSED [ 14%]
+tests/test_parsers/test_kadmin.py::test_TC_COL_02_policy_parsing PASSED  [ 17%]
+tests/test_parsers/test_kadmin.py::test_TC_COL_07_malformed_principal PASSED [ 21%]
+tests/test_parsers/test_kerberos_conf.py::test_tc_col_03_kdc_conf_realm_settings PASSED [ 25%]
+tests/test_parsers/test_kerberos_conf.py::test_tc_col_03_krb5_conf_libdefaults_and_tabs PASSED [ 28%]
+tests/test_parsers/test_kerberos_conf.py::test_tc_col_03_bad_line_is_an_error_not_a_crash PASSED [ 32%]
+tests/test_parsers/test_kerberos_conf.py::test_tc_col_03_durations PASSED [ 35%]
+tests/test_rules/test_kc01.py::test_flags_user_older_than_90_days PASSED [ 39%]
+tests/test_rules/test_kc01.py::test_does_not_flag_user_at_exactly_90_days PASSED [ 42%]
+tests/test_rules/test_kc01.py::test_ignores_service_principals PASSED    [ 46%]
+tests/test_rules/test_kc06_to_kc09.py::test_tc_kc_06_unlisted_admin_flagged_listed_admin_not PASSED [ 50%]
+tests/test_rules/test_kc06_to_kc09.py::test_tc_kc_06_missing_justification_file_flags_every_admin PASSED [ 53%]
+tests/test_rules/test_kc06_to_kc09.py::test_tc_kc_07_weak_settings_and_keys_flagged_aes_only_not PASSED [ 57%]
+tests/test_rules/test_kc06_to_kc09.py::test_tc_kc_08_25_hours_flagged_24_not PASSED [ 60%]
+tests/test_rules/test_kc06_to_kc09.py::test_tc_kc_09_8_days_flagged_7_not PASSED [ 64%]
+tests/test_rules/test_kc06_to_kc09.py::test_tc_rsk_01_kc06_kc08_kc09_scores PASSED [ 67%]
+tests/test_scoring/test_scorer.py::test_severity_bands[24.9-Low] PASSED  [ 71%]
+tests/test_scoring/test_scorer.py::test_severity_bands[25-Medium] PASSED [ 75%]
+tests/test_scoring/test_scorer.py::test_severity_bands[49.9-Medium] PASSED [ 78%]
+tests/test_scoring/test_scorer.py::test_severity_bands[50-High] PASSED   [ 82%]
+tests/test_scoring/test_scorer.py::test_severity_bands[74.9-High] PASSED [ 85%]
+tests/test_scoring/test_scorer.py::test_severity_bands[75-Critical] PASSED [ 89%]
+tests/test_scoring/test_scorer.py::test_baseline_scores_match_requirements[KC-01-38.5-Medium] PASSED [ 92%]
+tests/test_scoring/test_scorer.py::test_baseline_scores_match_requirements[KC-02-70.0-High] PASSED [ 96%]
+tests/test_scoring/test_scorer.py::test_baseline_scores_match_requirements[KC-07-88.5-Critical] PASSED [100%]
+
+============================= 28 passed in 0.49s ==============================
