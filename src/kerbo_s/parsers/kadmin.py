@@ -1,6 +1,7 @@
 from datetime import datetime
 from pathlib import Path
 from kerbo_s.models import Principal, Policy, Snapshot
+from kerbo_s.parsers.kerberos_conf import parse_profile
 
 def classify_principal(name: str) -> str:
     """Classify a Kerberos principal by its name."""
@@ -261,6 +262,17 @@ def load_fixture_dir(path) -> Snapshot:
                 snapshot.policies.append(policy)
             except ValueError as exc:
                 snapshot.errors.append((filename, str(exc)))
+
+    # Load the Kerberos config files with parse_profile (S2-09, FR-COL-03).
+    for filename in ("krb5.conf", "kdc.conf"):
+        content = read_file(filename)
+
+        if content is None:
+            continue
+
+        settings, errors = parse_profile(content, filename)
+        snapshot.config.extend(settings)
+        snapshot.errors.extend(errors)
 
     return snapshot
 
