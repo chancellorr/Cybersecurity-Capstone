@@ -12,6 +12,7 @@ import yaml
 from kerbo_s.config import Config
 from kerbo_s.engine import run_audit
 from kerbo_s.parsers.kadmin import load_fixture_dir
+from kerbo_s.store.repository import fixture_inputs, list_findings, open_db, save_audit
 
 REAL = Path("tests/fixtures/real")
 CONFIG = Config.load("config/rules.yaml")
@@ -44,3 +45,16 @@ def test_tc_kc_15_findings_match_manifest(name):
     assert not (expected - found), f"Missed (false negatives): {sorted(expected - found)}"
     assert not (found & forbidden), f"Boundary cases flagged: {sorted(found & forbidden)}"
     assert not (found - expected), f"Extra findings (false positives): {sorted(found - expected)}"
+
+
+@pytest.mark.parametrize("name", ["planted", "aged"])
+def test_tc_kc_15_saved_audit_matches_findings(name, tmp_path):
+    folder = REAL / name
+    snapshot = load_fixture_dir(folder)
+    findings = run_audit(snapshot, CONFIG)
+    conn = open_db(tmp_path / "test.db")
+    audit_id = save_audit(conn, findings, fixture_inputs(folder), snapshot.errors, mode="fixture",
+                          collected_at=snapshot.collected_at)
+    stored = list_findings(conn, audit_id)
+    assert len(stored) == len(findings)
+    assert {(row["rule_id"], row["object_id"]) for row in stored} == keys(findings)
