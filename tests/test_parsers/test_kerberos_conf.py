@@ -56,3 +56,8 @@ def test_tc_col_03_durations():
     assert duration_seconds("10:00:00") == 36000
     assert duration_seconds("36000") == 36000
     assert duration_seconds("forever") is None
+
+
+def test_tc_col_03_include_directives_are_not_errors():
+    found, errors = parse_profile("includedir /etc/krb5.conf.d/\ninclude /etc/krb5.extra\n[libdefaults]\n  ok = 1\n", "krb5.conf")
+    assert errors == [] and [s.key for s in found] == ["ok"]
