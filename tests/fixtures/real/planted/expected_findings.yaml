@@ -1,0 +1,18 @@
+# Ground truth for the planted realm. Written before planting.
+# A finding matches when rule_id AND object_id match. observed and threshold are for people reading it.
+scenario: planted-v1
+collected_at: 2026-11-07
+expected:
+  - {tv: TV-03, rule_id: KC-03, object_type: policy, object_id: weakpol, observed: 11, threshold: 12}
+  - {tv: TV-03, rule_id: KC-03, object_type: principal, object_id: carol@KERBO.LAB, observed: no policy}
+  - {tv: TV-06, rule_id: KC-07, object_type: config, object_id: kdc.conf/realms/KERBO.LAB/supported_enctypes, observed: rc4-hmac}
+  - {tv: TV-06, rule_id: KC-07, object_type: config, object_id: krb5.conf/libdefaults/allow_weak_crypto, observed: "true"}
+  - {tv: TV-06, rule_id: KC-07, object_type: principal, object_id: host/legacy.kerbo.lab@KERBO.LAB, observed: rc4-hmac key}
+  - {tv: TV-07, rule_id: KC-08, object_type: config, object_id: kdc.conf/realms/KERBO.LAB/max_life, observed: 25h, threshold: 24h}
+  - {tv: TV-09, rule_id: KC-06, object_type: principal, object_id: eve/admin@KERBO.LAB}
+  - {tv: TV-10, rule_id: KC-09, object_type: config, object_id: kdc.conf/realms/KERBO.LAB/max_renewable_life, observed: 8d, threshold: 7d}
+not_expected:
+  - {tv: TV-03, rule_id: KC-03, object_id: standard, reason: minimum length 12 is the boundary}
+  - {tv: TV-07, rule_id: KC-08, object_id: krb5.conf/libdefaults/ticket_lifetime, reason: 24 hours is the boundary}
+  - {tv: TV-10, rule_id: KC-09, object_id: krb5.conf/libdefaults/renew_lifetime, reason: 7 days is the boundary}
+  - {tv: TV-09, rule_id: KC-06, object_id: ben/admin@KERBO.LAB, reason: listed in the justification file}

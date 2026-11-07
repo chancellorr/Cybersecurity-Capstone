@@ -1,0 +1,15 @@
+Principal: host/legacy.kerbo.lab@KERBO.LAB
+Expiration date: [never]
+Last password change: Sat Nov 07 04:50:39 UTC 2026
+Password expiration date: Fri Feb 05 04:50:39 UTC 2027
+Maximum ticket life: 1 day 01:00:00
+Maximum renewable life: 8 days 00:00:00
+Last modified: Sat Nov 07 04:50:39 UTC 2026 (root/admin@KERBO.LAB)
+Last successful authentication: [never]
+Last failed authentication: [never]
+Failed password attempts: 0
+Number of keys: 1
+Key: vno 1, DEPRECATED:arcfour-hmac
+MKey: vno 1
+Attributes: REQUIRES_PRE_AUTH
+Policy: standard

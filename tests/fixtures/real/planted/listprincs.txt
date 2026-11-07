@@ -1,0 +1,14 @@
+HTTP/web.kerbo.lab@KERBO.LAB
+K/M@KERBO.LAB
+alice@KERBO.LAB
+ben/admin@KERBO.LAB
+bob@KERBO.LAB
+carol@KERBO.LAB
+dave@KERBO.LAB
+eve/admin@KERBO.LAB
+frank@KERBO.LAB
+host/legacy.kerbo.lab@KERBO.LAB
+kadmin/admin@KERBO.LAB
+kadmin/changepw@KERBO.LAB
+krbtgt/KERBO.LAB@KERBO.LAB
+ldap/dir.kerbo.lab@KERBO.LAB
