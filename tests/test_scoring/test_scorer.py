@@ -18,6 +18,8 @@ def test_severity_bands(score, expected):
 @pytest.mark.parametrize("rule_id,score,severity", [
     ("KC-01", 38.5, "Medium"),
     ("KC-02", 70.0, "High"),
+    ("KC-03", 65.0, "High"),
+    ("KC-04", 35.0, "Medium"),
     ("KC-07", 88.5, "Critical"),
 ])
 def test_baseline_scores_match_requirements(rule_id, score, severity):
