@@ -1,0 +1,4 @@
+# Ground truth for the clean baseline realm (TV-12). Expected Result: Audit finds nothing.
+scenario: TV-12 clean baseline
+collected_at: 2026-11-06
+expected: []
