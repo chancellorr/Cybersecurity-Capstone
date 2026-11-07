@@ -11,10 +11,13 @@ Kerbo-S is an AI-assisted Kerberos security auditor for an MIT Kerberos lab. A d
 
 | Area | Status |
 |---|---|
-| MIT Kerberos lab VM | Running |
-| Project documents (requirements, design, change, test plan) | Drafted, in docs/ |
-| Walking skeleton (snapshot, rule KC-01, scoring, window) | Included |
-| Rules KC-02 to KC-11, collectors, database, AI, reports | Sprint 2 |
+| MIT Kerberos lab KDC (Proxmox, realm KERBO.LAB) | Running; see docs/lab-setup.md |
+| Project documents | Sprint 1 and Sprint 2 PDFs in [docs/](docs/README.md) |
+| Parsers for kadmin output, krb5.conf and kdc.conf | Done (Sprint 2) |
+| Rules KC-01 to KC-04 and KC-06 to KC-09, risk scoring | Done (Sprint 2) |
+| SQLite storage with immutable findings; CLI; findings window | Done (Sprint 2) |
+| Tests | 68 passing, on real lab fixtures (clean, planted, aged) |
+| KC-05, KC-10, KC-11, live collector, AI, reports and PDF | Sprint 3 |
 
 ## Quick start
 
