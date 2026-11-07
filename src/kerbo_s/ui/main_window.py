@@ -8,13 +8,13 @@ from __future__ import annotations
 import sys
 
 from PyQt6.QtWidgets import (
-    QApplication, QFileDialog, QMainWindow, QPushButton, QTableWidget,
+    QApplication, QFileDialog, QMainWindow, QMessageBox, QPushButton, QTableWidget,
     QTableWidgetItem, QVBoxLayout, QWidget,
 )
 
 from kerbo_s.config import Config
 from kerbo_s.engine import run_audit
-from kerbo_s.snapshot.io import load_snapshot
+from kerbo_s.snapshot.io import SnapshotError, load_snapshot
 
 HEADERS = ["Severity", "Score", "Rule", "Object", "Observed", "Threshold"]
 
@@ -39,7 +39,12 @@ class MainWindow(QMainWindow):
         path, _ = QFileDialog.getOpenFileName(self, "Choose snapshot", "tests/fixtures", "JSON (*.json)")
         if not path:
             return
-        findings = run_audit(load_snapshot(path), Config.load("config/rules.yaml"))
+        try:
+            snapshot = load_snapshot(path)
+        except SnapshotError as exc:
+            QMessageBox.critical(self, "Cannot load snapshot", str(exc))
+            return
+        findings = run_audit(snapshot, Config.load("config/rules.yaml"))
         self.table.setRowCount(len(findings))
         for row, f in enumerate(findings):
             values = [f.severity, f.score, f.rule_id, f.object_id, f.observed, f.threshold]
