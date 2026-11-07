@@ -9,7 +9,13 @@ WEAK_PREFIXES = ("rc4", "arcfour", "des")   # des also covers des3-*; aes types 
 
 
 def weak_types(value: str):
-    names = [token.split(":")[0].lower() for token in value.replace(",", " ").split()]
+    """Weak enctype names in a setting or key list.
+
+    Each token can carry a label on either side of a colon: a salt after it in kdc.conf
+    ("rc4-hmac:normal"), or a status before it in getprinc output on newer MIT releases
+    ("DEPRECATED:arcfour-hmac"). Every part is checked, so both forms are caught.
+    """
+    names = [part.lower() for token in value.replace(",", " ").split() for part in token.split(":")]
     return sorted({n for n in names if n.startswith(WEAK_PREFIXES)})
 
 

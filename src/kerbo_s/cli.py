@@ -8,7 +8,7 @@ from dataclasses import asdict
 
 from kerbo_s.config import Config
 from kerbo_s.engine import run_audit
-from kerbo_s.snapshot.io import load_snapshot
+from kerbo_s.snapshot.io import SnapshotError, load_snapshot
 
 
 def main(argv=None) -> int:
@@ -19,7 +19,12 @@ def main(argv=None) -> int:
     audit.add_argument("--config", default="config/rules.yaml")
     args = parser.parse_args(argv)
 
-    findings = run_audit(load_snapshot(args.snapshot), Config.load(args.config))
+    try:
+        snapshot = load_snapshot(args.snapshot)
+    except SnapshotError as exc:
+        print(f"Error: {exc}", file=sys.stderr)
+        return 2
+    findings = run_audit(snapshot, Config.load(args.config))
     json.dump([asdict(f) for f in findings], sys.stdout, indent=2, default=str)
     sys.stdout.write("\n")
     return 0

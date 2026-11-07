@@ -67,3 +67,11 @@ def test_tc_kc_09_8_days_flagged_7_not():
 def test_tc_rsk_01_kc06_kc08_kc09_scores():
     got = {r: (lambda f: (f.score, f.severity))(score_finding(Finding(r, "x", "y", 1, 1), CONFIG)) for r in ("KC-06", "KC-08", "KC-09")}
     assert got == {"KC-06": (68.0, "High"), "KC-08": (42.0, "Medium"), "KC-09": (40.0, "Medium")}
+
+
+def test_tc_kc_07_deprecated_label_on_rc4_key_flagged():
+    """Ubuntu 26.04's getprinc shows RC4 keys as 'DEPRECATED:arcfour-hmac'."""
+    s = snap([Principal("host/legacy.kerbo.lab@KERBO.LAB", "service", key_enctypes=("DEPRECATED:arcfour-hmac",)),
+              Principal("alice@KERBO.LAB", "user", key_enctypes=("aes256-cts-hmac-sha1-96",))])
+    findings = list(KC07WeakEncryption().evaluate(s, CONFIG))
+    assert [(f.object_id, f.observed) for f in findings] == [("host/legacy.kerbo.lab@KERBO.LAB", "arcfour-hmac")]

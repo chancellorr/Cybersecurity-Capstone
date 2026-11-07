@@ -8,6 +8,7 @@ from kerbo_s.models import ConfigSetting
 _SECTION = re.compile(r"^\[(?P<name>[^\]]+)\]$")
 _OPEN = re.compile(r"^(?P<name>[^=\s]+)\s*=\s*\{$")
 _PAIR = re.compile(r"^(?P<key>[^=\s]+)\s*=\s*(?P<value>.*)$")
+_DIRECTIVE = re.compile(r"^(include|includedir|module)\s+\S")  # MIT profile directives; the files they name are not read
 
 
 def parse_profile(text: str, file_label: str):
@@ -16,7 +17,7 @@ def parse_profile(text: str, file_label: str):
     path = []          # ['realms', 'KERBO.LAB']
     for number, raw in enumerate(text.splitlines(), start=1):
         line = raw.strip()
-        if not line or line.startswith(("#", ";")):
+        if not line or line.startswith(("#", ";")) or _DIRECTIVE.match(line):
             continue
         if m := _SECTION.match(line):
             path = [m.group("name").strip()]

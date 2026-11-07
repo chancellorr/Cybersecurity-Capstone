@@ -3,9 +3,12 @@ from kerbo_s.engine import run_audit
 from kerbo_s.snapshot.io import load_snapshot
 
 
-def test_sample_snapshot_gives_one_scored_finding():
+def test_sample_snapshot_gives_two_scored_findings():
     findings = run_audit(load_snapshot("tests/fixtures/sample_snapshot.json"), Config.load("config/rules.yaml"))
-    assert [(f.rule_id, f.object_id, f.severity) for f in findings] == [("KC-01", "alice@LAB.LOCAL", "Medium")]
+    assert [(f.rule_id, f.object_id, f.severity) for f in findings] == [
+        ("KC-02", "host/server.lab.local@LAB.LOCAL", "High"),
+        ("KC-01", "alice@LAB.LOCAL", "Medium"),
+    ]
 
 
 def test_audit_is_deterministic():
