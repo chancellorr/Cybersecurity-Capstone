@@ -1,0 +1,6 @@
+K/M@KERBO.LAB
+alice@KERBO.LAB
+ben/admin@KERBO.LAB
+kadmin/admin@KERBO.LAB
+kadmin/changepw@KERBO.LAB
+krbtgt/KERBO.LAB@KERBO.LAB
