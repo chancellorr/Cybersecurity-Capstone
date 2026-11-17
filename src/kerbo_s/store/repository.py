@@ -36,7 +36,16 @@ def open_db(path) -> sqlite3.Connection:
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")
     conn.executescript(SCHEMA.read_text(encoding="utf-8"))
+    _add_missing_columns(conn)
     return conn
+
+
+def _add_missing_columns(conn) -> None:
+    """Bring a database made by an older version up to date (CREATE TABLE IF NOT EXISTS adds no columns)."""
+    columns = {row["name"] for row in conn.execute("PRAGMA table_info(audits)")}
+    if "integrity" not in columns:
+        conn.execute("ALTER TABLE audits ADD COLUMN integrity TEXT")
+        conn.commit()
 
 
 def sha256_file(path) -> str:
@@ -44,8 +53,9 @@ def sha256_file(path) -> str:
 
 
 def fixture_inputs(folder) -> list:
-    """The files load_fixture_dir reads from a fixture folder (not the manifest or README)."""
-    return [p for p in sorted(Path(folder).iterdir()) if p.is_file() and p.suffix in (".txt", ".conf")]
+    """The raw files in a fixture or snapshot folder (not the manifest, README, snapshot.json or hashes.json)."""
+    return [p for p in sorted(Path(folder).iterdir())
+            if p.is_file() and p.suffix in (".txt", ".conf", ".log", ".acl")]
 
 
 def _artifact_name(finding) -> str:
@@ -63,18 +73,19 @@ def _text(value):
     return None if value is None else str(value)
 
 
-def save_audit(conn, findings, inputs, errors, mode, collected_at=None, config_hash=None) -> int:
+def save_audit(conn, findings, inputs, errors, mode, collected_at=None, config_hash=None, integrity=None) -> int:
     """Save one audit run in a single transaction and return its id.
 
     inputs: paths of the files the audit read (one artifacts row each, with its SHA-256).
     errors: the snapshot's collection errors as (source, message) pairs.
+    integrity: the snapshot's hash check result ('verified', 'mismatch' or 'not hashed').
     """
     now = datetime.now(timezone.utc).isoformat(timespec="seconds")
     with conn:
         audit_id = conn.execute(
-            "INSERT INTO audits (started_at, mode, tool_version, ruleset_version, config_hash)"
-            " VALUES (?, ?, ?, ?, ?)",
-            (now, mode, __version__, RULESET_VERSION, config_hash),
+            "INSERT INTO audits (started_at, mode, tool_version, ruleset_version, config_hash, integrity)"
+            " VALUES (?, ?, ?, ?, ?, ?)",
+            (now, mode, __version__, RULESET_VERSION, config_hash, integrity),
         ).lastrowid
 
         artifact_ids = {}

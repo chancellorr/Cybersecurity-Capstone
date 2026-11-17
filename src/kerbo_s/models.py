@@ -51,6 +51,7 @@ class Snapshot:
     policies: list = field(default_factory=list)
     config: list = field(default_factory=list)
     errors: list = field(default_factory=list)
+    integrity: Optional[str] = None  # snapshot folders: "verified", "mismatch" or "not hashed" (S3-05)
 
 
 @dataclass(frozen=True)
