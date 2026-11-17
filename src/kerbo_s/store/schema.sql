@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS audits (
     mode TEXT NOT NULL,
     tool_version TEXT NOT NULL,
     ruleset_version TEXT NOT NULL,
-    config_hash TEXT
+    config_hash TEXT,
+    integrity TEXT  -- snapshot folders: 'verified', 'mismatch' or 'not hashed' (S3-05, TC-COL-09)
 );
 
 CREATE TABLE IF NOT EXISTS artifacts (
