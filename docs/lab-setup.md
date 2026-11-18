@@ -46,3 +46,23 @@
 
    ## Tests
    - TC-ENV-01: Pass on Nov 5, 2026, evidence in docs/evidence/TC-ENV-01.png
+   ## Live collector (Sprint 3, S3-04)
+   The collector runs on the KDC with the Python standard library only; nothing needs installing. It runs only read-only list and get commands (allow-listed), copies the config files, includes and ACL, reads 30 days of the KDC journal, and writes a snapshot folder with hashes.json last.
+
+   From a PC with the repo (git pull first):
+
+   ```
+   scp -r src kerbo@kdc.kerbo.lab:~/kerbo-s/
+   ```
+
+   On the KDC:
+
+   ```
+   sudo PYTHONPATH=~/kerbo-s/src python3 -m kerbo_s.collectors.live --out ~/snapshots/clean
+   ```
+
+   - The output folder must be new or empty. Use a new name for each run.
+   - Files belong to the user who ran sudo, so they can be copied back: `scp -r kerbo@kdc.kerbo.lab:~/snapshots/clean .`
+   - `commands.log` lists every command run (TC-COL-06). `collection_errors.txt` exists only if something could not be read.
+   - Exit code 2 and "Cannot reach the KDC" means kadmin.local could not run (for example, not run with sudo).
+   - Check the folder from the repo on a PC: `python -m kerbo_s.cli audit --snapshot clean` (exit 4 means a file changed after capture).
