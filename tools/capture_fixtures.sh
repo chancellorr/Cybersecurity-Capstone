@@ -24,5 +24,7 @@ done < "$OUT/getpols.txt"
 
 cp /etc/krb5.conf "$OUT/krb5.conf"
 cp /etc/krb5kdc/kdc.conf "$OUT/kdc.conf"
+cp /etc/krb5kdc/kadm5.acl "$OUT/kadm5.acl"
+journalctl -u krb5-kdc --no-pager -o short-iso --since "$(date -u -d "-30 days" +%F)" > "$OUT/krb5kdc.log"
 chown -R kerbo:kerbo /home/kerbo/fixtures
 echo "Saved $(ls "$OUT" | wc -l) files to $OUT"

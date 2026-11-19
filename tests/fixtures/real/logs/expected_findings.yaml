@@ -1,0 +1,9 @@
+scenario: logs-v1
+expected:
+  - {tv: TV-08, rule_id: KC-10, object_type: principal, object_id: bob@KERBO.LAB, observed: 10 failures in 15 min}
+  - {tv: TV-11, rule_id: KC-11, object_type: principal, object_id: burstuser@KERBO.LAB, observed: 120 requests in 15 min}
+  - {tv: TV-09, rule_id: KC-06, object_type: acl, object_id: frank@KERBO.LAB, observed: "ACL entry: *"}
+not_expected:
+  - {tv: TV-08, rule_id: KC-10, object_id: carol@KERBO.LAB, reason: 9 failures is below the threshold}
+  - {tv: TV-08, rule_id: KC-10, object_id: dave@KERBO.LAB, reason: 10 failures spread over 30 minutes}
+  - {tv: TV-11, rule_id: KC-11, object_id: calmuser@KERBO.LAB, reason: 50 requests is below 100}
