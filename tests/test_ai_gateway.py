@@ -57,7 +57,7 @@ def _run_mock_audit(tmp_path, provider, source_text=""):
         outputs = conn.execute(
             "SELECT * FROM ai_outputs WHERE audit_id = ?", (audit_id,)
         ).fetchall()
-        return saved, outputs
+        return list_findings(conn, audit_id), outputs
     finally:
         conn.close()
 
@@ -100,3 +100,49 @@ def test_tc_ai_03_injection_text_never_sent(tmp_path):
     assert findings[0]["rule_id"] == "KC-01"
     assert len(outputs) == 1
     assert outputs[0]["status"] == "ok"
+
+class ScriptedProvider:
+
+    def __init__(self, *replies):
+        self.replies = iter(replies)
+        self.calls = 0
+
+    def complete(self, prompt):
+        self.calls += 1
+        return next(self.replies)
+
+
+def test_tc_ai_04_invalid_then_valid_retries_once(tmp_path):
+    valid_reply = MockProvider().complete("")
+    provider = ScriptedProvider("invalid JSON", valid_reply)
+
+    _, (output,) = _run_mock_audit(tmp_path, provider)
+
+    assert provider.calls == 2
+    assert output["status"] == "ok"
+    assert output["output_json"] == valid_reply
+
+
+def test_tc_ai_04_invalid_twice_is_unavailable(tmp_path):
+    provider = ScriptedProvider("invalid JSON", "{}")
+
+    _, (output,) = _run_mock_audit(tmp_path, provider)
+
+    assert provider.calls == 2
+    assert output["status"] == "unavailable"
+    assert output["output_json"] is None
+
+
+def test_tc_ai_05_reply_with_score_field_is_rejected_and_score_unchanged(tmp_path):
+    (baseline,), _ = _run_mock_audit(tmp_path, MockProvider())
+    reply = json.loads(MockProvider().complete(""))
+    reply["score"] = baseline["score"] + 1
+    invalid_reply = json.dumps(reply)
+    provider = ScriptedProvider(invalid_reply, invalid_reply)
+
+    (finding,), (output,) = _run_mock_audit(tmp_path, provider)
+
+    assert provider.calls == 2
+    assert output["status"] == "unavailable"
+    assert output["output_json"] is None
+    assert finding["score"] == baseline["score"]
