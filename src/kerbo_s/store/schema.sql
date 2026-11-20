@@ -52,6 +52,25 @@ CREATE TABLE IF NOT EXISTS collection_errors (
     occurred_at TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS ai_outputs (
+    id INTEGER PRIMARY KEY,
+    audit_id INTEGER NOT NULL REFERENCES audits(id),
+    finding_id INTEGER REFERENCES findings(id),
+    kind TEXT NOT NULL CHECK (kind IN ('finding', 'groups', 'narrative')),
+    provider TEXT NOT NULL,
+    model TEXT NOT NULL,
+    prompt_version TEXT NOT NULL,
+    created_at TEXT NOT NULL,
+    status TEXT NOT NULL CHECK (status IN ('ok', 'unavailable')),
+    output_json TEXT,
+    label TEXT NOT NULL DEFAULT 'AI-generated, advisory'
+        CHECK (label = 'AI-generated, advisory'),
+    CHECK (
+        (kind = 'finding' AND finding_id IS NOT NULL)
+        OR (kind IN ('groups', 'narrative') AND finding_id IS NULL)
+    )
+);
+
 CREATE TRIGGER IF NOT EXISTS findings_no_update
 BEFORE UPDATE ON findings
 BEGIN SELECT RAISE(ABORT, 'findings are immutable'); END;
