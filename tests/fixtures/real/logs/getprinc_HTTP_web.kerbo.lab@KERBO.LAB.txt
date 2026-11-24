@@ -1,0 +1,16 @@
+Principal: HTTP/web.kerbo.lab@KERBO.LAB
+Expiration date: [never]
+Last password change: Sat Nov 07 04:37:27 UTC 2026
+Password expiration date: Fri Feb 05 04:37:27 UTC 2027
+Maximum ticket life: 0 days 10:00:00
+Maximum renewable life: 7 days 00:00:00
+Last modified: Sat Nov 07 04:37:27 UTC 2026 (root/admin@KERBO.LAB)
+Last successful authentication: [never]
+Last failed authentication: [never]
+Failed password attempts: 0
+Number of keys: 2
+Key: vno 1, aes256-cts-hmac-sha1-96
+Key: vno 1, aes128-cts-hmac-sha1-96
+MKey: vno 1
+Attributes: REQUIRES_PRE_AUTH
+Policy: standard
