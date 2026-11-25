@@ -1,0 +1,9 @@
+# Ground truth for TV-15 (compound scenario). Written before planting.
+# A finding matches when rule_id AND object_id match. observed and threshold are for people reading it.
+# Note: collected_at aged +181 days by Chance
+scenario: tv15-v1
+collected_at: 2026-11-25
+expected:
+  - {tv: TV-15, rule_id: KC-02, object_type: principal, object_id: svc/backup.kerbo.lab@KERBO.LAB, observed: 181 days after aging, threshold: 180 days}
+  - {tv: TV-15, rule_id: KC-06, object_type: principal, object_id: svc/backup.kerbo.lab@KERBO.LAB, observed: "ACL entry: *"}
+  - {tv: TV-15, rule_id: KC-07, object_type: principal, object_id: svc/backup.kerbo.lab@KERBO.LAB, observed: rc4-hmac key}
