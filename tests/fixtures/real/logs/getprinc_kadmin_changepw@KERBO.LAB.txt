@@ -1,0 +1,16 @@
+Principal: kadmin/changepw@KERBO.LAB
+Expiration date: [never]
+Last password change: Thu Nov 05 17:01:53 UTC 2026
+Password expiration date: [never]
+Maximum ticket life: 0 days 00:05:00
+Maximum renewable life: 7 days 00:00:00
+Last modified: Thu Nov 05 17:01:53 UTC 2026 (kdb5_util@KERBO.LAB)
+Last successful authentication: [never]
+Last failed authentication: [never]
+Failed password attempts: 0
+Number of keys: 2
+Key: vno 1, aes256-cts-hmac-sha1-96
+Key: vno 1, aes128-cts-hmac-sha1-96
+MKey: vno 1
+Attributes: DISALLOW_TGT_BASED PWCHANGE_SERVICE LOCKDOWN_KEYS
+Policy: [none]
